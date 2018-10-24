@@ -350,14 +350,6 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
     uint256 limitStage2 =  4 * 10**9 * (10 ** uint256(decimals));
     uint256 limitStage3 =  6 * 10**9 * (10 ** uint256(decimals));
 
-    uint256 limitDiscountStage1 =  1538 * 10**6 * (10 ** uint256(decimals));
-    uint256 limitDiscountStage2 =  1666 * 10**6 * (10 ** uint256(decimals));
-    uint256 limitDiscountStage3 =  1818 * 10**6 * (10 ** uint256(decimals));
-
-    uint256 tokenAllocatedStage1 = 0;
-    uint256 tokenAllocatedStage2 = 0;
-    uint256 tokenAllocatedStage3 = 0;
-
     uint256 public countInvestor;
 
     event TokenPurchase(address indexed beneficiary, uint256 value, uint256 amount);
@@ -371,8 +363,8 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
     event HardCapReached();
 
 
-    constructor(address _owner, _wallet) public
-    Crowdsale(_wallet)
+    constructor(address _owner) public
+    Crowdsale(_owner)
     {
         require(_owner != address(0));
         owner = _owner;
@@ -416,14 +408,9 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
         if(currentPeriod > 0){
             if(currentPeriod == 1){
                 amountOfTokens = _weiAmount.mul(rate).mul(130).div(100);
-                if (tokenAllocatedStage1.add(amountOfTokens) > limitDiscountStage1) {
-                    amountOfTokens = 0;
-                }
                 if (tokenAllocated.add(amountOfTokens) > limitStage1) {
                     currentPeriod = currentPeriod.add(1);
                     amountOfTokens = 0;
-                } else {
-                    tokenAllocatedStage1 = tokenAllocatedStage1.add(amountOfTokens);
                 }
             }
             if(currentPeriod == 2){
@@ -431,8 +418,6 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
                 if (tokenAllocated.add(amountOfTokens) > limitStage2) {
                     currentPeriod = currentPeriod.add(1);
                     amountOfTokens = 0;
-                } else {
-                    tokenAllocatedStage1 = tokenAllocatedStage1.add(amountOfTokens);
                 }
             }
             if(currentPeriod == 3){
@@ -440,8 +425,6 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
                 if (tokenAllocated.add(amountOfTokens) > limitStage3) {
                     currentPeriod = 0;
                     amountOfTokens = 0;
-                } else {
-                    tokenAllocatedStage1 = tokenAllocatedStage1.add(amountOfTokens);
                 }
             }
         }
