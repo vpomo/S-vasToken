@@ -359,7 +359,6 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
     event ChangeAddressWallet(address indexed owner, address indexed newAddress, address indexed oldAddress);
     event ChangeRate(address indexed owner, uint256 newValue, uint256 oldValue);
     event Burn(address indexed burner, uint256 value);
-    event Finalized();
     event HardCapReached();
 
 
@@ -368,7 +367,7 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
     {
         require(_owner != address(0));
         owner = _owner;
-        owner = msg.sender; // for test's
+        //owner = msg.sender; // for test's
         transfersEnabled = true;
         mintingFinished = false;
         totalSupply = INITIAL_SUPPLY;
@@ -401,7 +400,7 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
 
     function getTotalAmountOfTokens(uint256 _weiAmount) internal returns (uint256) {
         uint256 currentDate = now;
-        currentDate = 1547114400; // Thu, 10 Jan 2019 10:00:00 GMT // for test's
+        //currentDate = 1547114400; // Thu, 10 Jan 2019 10:00:00 GMT // for test's
         uint currentPeriod = 0;
         currentPeriod = getPeriod(currentDate);
         uint256 amountOfTokens = 0;
@@ -585,17 +584,5 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
         rate = _newRate;
         emit ChangeRate(msg.sender, _newRate, _oldRate);
     }
-
-    /**
-     * @dev owner completes contract
-     */
-    function finalize() public onlyOwner returns (bool result) {
-        result = false;
-        transfersEnabled = false;
-        finishMinting();
-        emit Finalized();
-        result = true;
-    }
-
 }
 
