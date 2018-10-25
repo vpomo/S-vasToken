@@ -66,13 +66,17 @@ contract('SVSTCrowdsale', (accounts) => {
         period = await contract.getPeriod(currentDate);
         assert.equal(0, period);
 
-        currentDate = 1540425600; // Thu, 25 Oct 2018 00:00:00 GMT
+        currentDate = 1547114400; // Thu, 10 Jan 2019 10:00:00 GMT
         period = await contract.getPeriod(currentDate);
         assert.equal(1, period);
 
         currentDate = 1547978400; // Sun, 20 Jan 2019 10:00:00 GMT
         period = await contract.getPeriod(currentDate);
         assert.equal(2, period);
+
+        currentDate = 1549792800; // Sun, 10 Feb 2019 10:00:00 GMT
+        period = await contract.getPeriod(currentDate);
+        assert.equal(3, period);
 
         currentDate = 1554199200; // Tue, 02 Apr 2019 10:00:00 GMT
         period = await contract.getPeriod(currentDate);

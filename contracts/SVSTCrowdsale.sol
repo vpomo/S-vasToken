@@ -335,16 +335,16 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
     address public addressFundBounty = 0x6b424e700890D516BadB074f52c367408e1152fB;
 
     // 1 Jan - 15 Jan
-    uint256 startTimeIcoStage1 = 1539993600; // Sat, 20 Oct 2018 00:00:00 GMT
-    uint256 endTimeIcoStage1 =   1546300799; // Mon, 31 Dec 2018 23:59:59 GMT
+    uint256 startTimeIcoStage1 = 1546300800; // Tue, 01 Jan 2019 00:00:00 GMT
+    uint256 endTimeIcoStage1 =   1547596799; // Tue, 15 Jan 2019 23:59:59 GMT
 
     // 16 Jan - 31 Jan
-    uint256 startTimeIcoStage2 = 1546300800; // Tue, 01 Jan 2019 00:00:00 GMT
-    uint256 endTimeIcoStage2   = 1554076799; // Sun, 31 Mar 2019 23:59:59 GMT
+    uint256 startTimeIcoStage2 = 1547596800; // Wed, 16 Jan 2019 00:00:00 GMT
+    uint256 endTimeIcoStage2   = 1548979199; // Thu, 31 Jan 2019 23:59:59 GMT
 
     // 1 Feb - 15 Feb
-    uint256 startTimeIcoStage3 = 1546300800; // Tue, 01 Jan 2019 00:00:00 GMT
-    uint256 endTimeIcoStage3   = 1554076799; // Sun, 31 Mar 2019 23:59:59 GMT
+    uint256 startTimeIcoStage3 = 1548979200; // Fri, 01 Feb 2019 00:00:00 GMT
+    uint256 endTimeIcoStage3   = 1554076799; // Fri, 15 Feb 2019 23:59:59 GMT
 
     uint256 limitStage1 =  2 * 10**9 * (10 ** uint256(decimals));
     uint256 limitStage2 =  4 * 10**9 * (10 ** uint256(decimals));
@@ -401,7 +401,7 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
 
     function getTotalAmountOfTokens(uint256 _weiAmount) internal returns (uint256) {
         uint256 currentDate = now;
-        //currentDate = 1540425600; // (25 Oct 2018) // for test's
+        currentDate = 1547114400; // Thu, 10 Jan 2019 10:00:00 GMT // for test's
         uint currentPeriod = 0;
         currentPeriod = getPeriod(currentDate);
         uint256 amountOfTokens = 0;
@@ -433,14 +433,17 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
     }
 
     function getPeriod(uint256 _currentDate) public view returns (uint) {
-        if(_currentDate < startTimePreIco){
+        if(_currentDate < startTimeIcoStage1){
             return 0;
         }
-        if( startTimePreIco <= _currentDate && _currentDate <= endTimePreIco){
+        if( startTimeIcoStage1 <= _currentDate && _currentDate <= endTimeIcoStage1){
             return 1;
         }
-        if( startTimeIco <= _currentDate && _currentDate <= endTimeIco){
+        if( startTimeIcoStage2 <= _currentDate && _currentDate <= endTimeIcoStage2){
             return 2;
+        }
+        if( startTimeIcoStage3 <= _currentDate && _currentDate <= endTimeIcoStage3){
+            return 3;
         }
         return 0;
     }
@@ -494,47 +497,70 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
     }
 
     /**
-     * @dev owner change time for startTimePreIco
+     * @dev owner change time for startTimeIcoStage1
      * @param _value new time value
      */
-    function setStartTimePreIco(uint256 _value) external onlyOwner {
+    function setStartTimeIcoStage1(uint256 _value) external onlyOwner {
         require(_value > 0);
-        uint256 _oldValue = startTimePreIco;
-        startTimePreIco = _value;
+        uint256 _oldValue = startTimeIcoStage1;
+        startTimeIcoStage1 = _value;
+        emit ChangeTime(msg.sender, _value, _oldValue);
+    }
+
+    /**
+     * @dev owner change time for endTimeIcoStage1
+     * @param _value new time value
+     */
+    function setEndTimeIcoStage1(uint256 _value) external onlyOwner {
+        require(_value > 0);
+        uint256 _oldValue = endTimeIcoStage1;
+        endTimeIcoStage1 = _value;
+        emit ChangeTime(msg.sender, _value, _oldValue);
+    }
+
+    /**
+     * @dev owner change time for startTimeIcoStage2
+     * @param _value new time value
+     */
+    function setStartTimeIcoStage2(uint256 _value) external onlyOwner {
+        require(_value > 0);
+        uint256 _oldValue = startTimeIcoStage2;
+        startTimeIcoStage2 = _value;
         emit ChangeTime(msg.sender, _value, _oldValue);
     }
 
 
     /**
-     * @dev owner change time for endTimePreIco
+     * @dev owner change time for endTimeIcoStage2
      * @param _value new time value
      */
-    function setEndTimePreIco(uint256 _value) external onlyOwner {
+    function setEndTimeIcoStage2(uint256 _value) external onlyOwner {
         require(_value > 0);
-        uint256 _oldValue = endTimePreIco;
-        endTimePreIco = _value;
+        uint256 _oldValue = endTimeIcoStage2;
+        endTimeIcoStage2 = _value;
         emit ChangeTime(msg.sender, _value, _oldValue);
     }
 
     /**
-     * @dev owner change time for startTimeIco
-     * @param _value new time value
-     */
-    function setStartTimeIco(uint256 _value) external onlyOwner {
+ * @dev owner change time for startTimeIcoStage3
+ * @param _value new time value
+ */
+    function setStartTimeIcoStage3(uint256 _value) external onlyOwner {
         require(_value > 0);
-        uint256 _oldValue = startTimeIco;
-        startTimeIco = _value;
+        uint256 _oldValue = startTimeIcoStage3;
+        startTimeIcoStage3 = _value;
         emit ChangeTime(msg.sender, _value, _oldValue);
     }
 
+
     /**
-     * @dev owner change time for endTimeIco
+     * @dev owner change time for endTimeIcoStage3
      * @param _value new time value
      */
-    function setEndTimeIco(uint256 _value) external onlyOwner {
+    function setEndTimeIcoStage3(uint256 _value) external onlyOwner {
         require(_value > 0);
-        uint256 _oldValue = endTimeIco;
-        endTimeIco = _value;
+        uint256 _oldValue = endTimeIcoStage3;
+        endTimeIcoStage3 = _value;
         emit ChangeTime(msg.sender, _value, _oldValue);
     }
 
