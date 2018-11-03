@@ -235,8 +235,8 @@ contract Ownable {
  */
 
 contract MintableToken is StandardToken, Ownable {
-    string public constant name = "SivasToken";
-    string public constant symbol = "SVST";
+    string public constant name = "WebSpaceX";
+    string public constant symbol = "WSPX";
     uint8 public constant decimals = 18;
     mapping(uint8 => uint8) public approveOwner;
 
@@ -315,7 +315,7 @@ contract Crowdsale is Ownable {
 }
 
 
-contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
+contract WSPXCrowdsale is Ownable, Crowdsale, MintableToken {
     using SafeMath for uint256;
 
     uint256 public rate  = 312500;
@@ -331,8 +331,8 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
     uint256 public    fundTeam   = 1 * 10**9 * (10 ** uint256(decimals));
     uint256 public    fundBounty = 2 * 10**9 * (10 ** uint256(decimals));
 
-    address public addressFundTeam   = 0x932c654B2c0ed62C485279631126dAcEaaAD35b4;
-    address public addressFundBounty = 0x6b424e700890D516BadB074f52c367408e1152fB;
+    address public addressFundTeam   = 0xA2434A8F6457fe7CF29AEa841cf3D0B0FE3217c8;
+    address public addressFundBounty = 0x8828c48DEc2764868aD3bBf7fE9e8aBE773E3064;
 
     // 1 Jan - 15 Jan
     uint256 startTimeIcoStage1 = 1546300800; // Tue, 01 Jan 2019 00:00:00 GMT
@@ -362,8 +362,8 @@ contract SVSTCrowdsale is Ownable, Crowdsale, MintableToken {
     event HardCapReached();
 
 
-    constructor(address _owner) public
-    Crowdsale(_owner)
+    constructor(address _owner, address _wallet) public
+    Crowdsale(_wallet)
     {
         require(_owner != address(0));
         owner = _owner;

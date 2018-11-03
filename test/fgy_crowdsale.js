@@ -1,8 +1,8 @@
-var SVSTCrowdsale = artifacts.require("./SVSTCrowdsale.sol");
+var WSPXCrowdsale = artifacts.require("./WSPXCrowdsale.sol");
 //import assertRevert from './helpers/assertRevert';
 
 
-contract('SVSTCrowdsale', (accounts) => {
+contract('WSPXCrowdsale', (accounts) => {
     var contract;
     var owner = accounts[0]; // for test
 
@@ -15,7 +15,7 @@ contract('SVSTCrowdsale', (accounts) => {
 
     it('should deployed contract', async ()  => {
         assert.equal(undefined, contract);
-        contract = await SVSTCrowdsale.deployed();
+        contract = await WSPXCrowdsale.deployed();
         assert.notEqual(undefined, contract);
     });
 
